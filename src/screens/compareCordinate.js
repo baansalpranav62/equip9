@@ -3,7 +3,7 @@ import { View, Image, TextInput, Button, Text, StyleSheet } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 function calculateDistance(lat1, lon1, lat2, lon2) {
-  const R = 6371; // Earth radius 
+  const R = 6371; 
   const dLat = degToRad(lat2 - lat1);
   const dLon = degToRad(lon2 - lon1);
   const a =
@@ -13,8 +13,8 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distanceInKm = R * c; // Distanceee in km
-  const distanceInMiles = distanceInKm * 0.621; // Convert distance to miles
+  const distanceInKm = R * c; 
+  const distanceInMiles = distanceInKm * 0.621; 
   return { km: distanceInKm.toFixed(2), miles: distanceInMiles.toFixed(2) };
 }
 
@@ -61,12 +61,14 @@ function CompareCordinate() {
           style={styles.input}
           placeholder="Latitude"
           value={latitude}
+          keyboardType={"phone-pad"}
           onChangeText={setLatitude}
         />
         <TextInput
           style={styles.input}
           placeholder="Longitude"
           value={longitude}
+          keyboardType={"phone-pad"}
           onChangeText={setLongitude}
         />
         <Button title="Calculate" onPress={Calculate} color="#3498db" />

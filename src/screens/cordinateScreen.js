@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Image, TextInput, Button, StyleSheet, Text, Modal } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-function CordinateScreen() {
+function CoordinateScreen() {
   const navigation = useNavigation();
   const route = useRoute();
   const { selectedImageUri } = route.params;
@@ -13,26 +13,23 @@ function CordinateScreen() {
   const latitudeRef = React.createRef();
   const longitudeRef = React.createRef();
 
-  const SaveCordinates = () => {
-    // Validate the input values before saving (e.g., check if they are not empty)
+  const SaveCoordinates = () => {
     if (!latitude || !longitude) {
       alert('Please enter valid coordinates.');
       return;
     }
 
-    // Store the coordinates in your component's state
     setLatitude(latitude);
     setLongitude(longitude);
-
-    // Clear the input fields
-    // latitudeRef.current.clear();
-    // longitudeRef.current.clear();
-    alert('Cordinates are saved.');
-    // Show the modal
-    // setIsModalVisible(true);
+    alert('Coordinates are saved.');
   };
 
-  const navigateToCompareCordinate = () => {
+  const navigateToCompareCoordinate = () => {
+    if (!latitude || !longitude) {
+      alert('Please enter valid coordinates before proceeding.');
+      return;
+    }
+
     navigation.navigate('CompareCordinate', {
       selectedImageUri,
       latitude,
@@ -55,29 +52,23 @@ function CordinateScreen() {
           ref={latitudeRef}
           style={styles.input}
           placeholder="Latitude"
+          keyboardType={"phone-pad"}
           onChangeText={(text) => setLatitude(text)}
         />
         <TextInput
           ref={longitudeRef}
           style={styles.input}
           placeholder="Longitude"
+          keyboardType={"phone-pad"}
           onChangeText={(text) => setLongitude(text)}
         />
         <View style={styles.buttonContainer}>
-          <Button title="Save" onPress={SaveCordinates} color="#3498db" />
+          <Button title="Save" onPress={SaveCoordinates} color="#3498db" />
         </View>
         <View style={styles.buttonContainer}>
-          <Button title="Next" onPress={navigateToCompareCordinate} color="#3498db" />
+          <Button title="Next" onPress={navigateToCompareCoordinate} color="#3498db" />
         </View>
       </View>
-      <Modal visible={isModalVisible} animationType="slide">
-        <View style={styles.modalContainer}>
-          <Text style={styles.modalText}>Saved Coordinates:</Text>
-          <Text>Latitude: {latitude}</Text>
-          <Text>Longitude: {longitude}</Text>
-          <Button title="Close" onPress={() => setIsModalVisible(false)} />
-        </View>
-      </Modal>
     </View>
   );
 }
@@ -121,16 +112,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: '100%',
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
+  
 });
 
-export default CordinateScreen;
+export default CoordinateScreen;
