@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, TextInput, Button, StyleSheet, Text } from 'react-native';
+import { View, Image, TextInput, Button, StyleSheet, Text, Modal } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 function CordinateScreen() {
@@ -8,9 +8,32 @@ function CordinateScreen() {
   const { selectedImageUri } = route.params;
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const navigateToScreen3 = () => {
-    navigation.navigate('Screen3', {
+  const latitudeRef = React.createRef();
+  const longitudeRef = React.createRef();
+
+  const SaveCordinates = () => {
+    // Validate the input values before saving (e.g., check if they are not empty)
+    if (!latitude || !longitude) {
+      alert('Please enter valid coordinates.');
+      return;
+    }
+
+    // Store the coordinates in your component's state
+    setLatitude(latitude);
+    setLongitude(longitude);
+
+    // Clear the input fields
+    // latitudeRef.current.clear();
+    // longitudeRef.current.clear();
+    alert('Cordinates are saved.');
+    // Show the modal
+    // setIsModalVisible(true);
+  };
+
+  const navigateToCompareCordinate = () => {
+    navigation.navigate('CompareCordinate', {
       selectedImageUri,
       latitude,
       longitude,
@@ -29,21 +52,32 @@ function CordinateScreen() {
       </View>
       <View style={styles.card}>
         <TextInput
+          ref={latitudeRef}
           style={styles.input}
           placeholder="Latitude"
-          value={latitude}
-          onChangeText={setLatitude}
+          onChangeText={(text) => setLatitude(text)}
         />
         <TextInput
+          ref={longitudeRef}
           style={styles.input}
           placeholder="Longitude"
-          value={longitude}
-          onChangeText={setLongitude}
+          onChangeText={(text) => setLongitude(text)}
         />
         <View style={styles.buttonContainer}>
-          <Button title="Next" onPress={navigateToScreen3} color="#3498db" />
+          <Button title="Save" onPress={SaveCordinates} color="#3498db" />
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button title="Next" onPress={navigateToCompareCordinate} color="#3498db" />
         </View>
       </View>
+      <Modal visible={isModalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <Text style={styles.modalText}>Saved Coordinates:</Text>
+          <Text>Latitude: {latitude}</Text>
+          <Text>Longitude: {longitude}</Text>
+          <Button title="Close" onPress={() => setIsModalVisible(false)} />
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -86,6 +120,16 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginVertical: 10,
     width: '100%',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
 });
 

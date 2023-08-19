@@ -5,7 +5,7 @@ import { RNS3 } from 'react-native-aws3';
 import { useNavigation } from '@react-navigation/native';
 
 const config = {
-  keyPrefix: 'myphoto/',
+  keyPrefix: 'pranav-photo/',
   bucket: 'equip9-testing',
   region: 'ap-south-1',
   accessKey: 'AKIA3KZVK3RM6V72UAHV',
@@ -110,8 +110,8 @@ function HomeScreen() {
     }
   }
 
-  function navigateToScreen2() {
-    navigation.navigate('Screen2', { selectedImageUri });
+  function navigateToCordinateScreen() {
+    navigation.navigate('CordinateScreen', { selectedImageUri });
   }
 
   return (
@@ -126,7 +126,7 @@ function HomeScreen() {
       </View>
       {selectedImageUri ? (
         <View style={styles.card}>
-          <Button title="Go to Screen 2" onPress={navigateToScreen2} color="#27ae60" />
+          <Button title="Enter Cordinates" onPress={navigateToCordinateScreen} color="#27ae60" />
         </View>
       ) : null}
       {uploadSuccessMessage ? (
