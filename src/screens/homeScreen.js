@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Button, Image, Text,SafeAreaView, StyleSheet, } from 'react-native';
+import { View, Button, Image, Text,SafeAreaView, StyleSheet, Alert, } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { RNS3 } from 'react-native-aws3';
 import { useNavigation } from '@react-navigation/native';
@@ -101,6 +101,7 @@ function HomeScreen() {
       });
       console.log(response, "222");
       if (!response.ok) {
+        alert('uploaded successfully')
         console.log('Upload successful!');
       } else {
         console.error('Failed to upload image:', response);
