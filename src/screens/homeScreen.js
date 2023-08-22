@@ -3,6 +3,9 @@ import { View, Button, Image, Text,SafeAreaView, StyleSheet, Alert, } from 'reac
 import ImagePicker from 'react-native-image-crop-picker';
 import { RNS3 } from 'react-native-aws3';
 import { useNavigation } from '@react-navigation/native';
+import styles from '../styles/styles';
+import CustomButton from '../components/button/button';
+
 
 const config = {
   keyPrefix: 'pranav-photo/',
@@ -118,52 +121,27 @@ function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Button title="Click Photo" onPress={openCamera} color="#3498db" />
+        {/* Use the CustomButton component for Click Photo */}
+        <CustomButton title="Click Photo" onPress={openCamera} color="#3498db" />
         {clickimageUri ? <Image source={{ uri: clickimageUri }} style={styles.image} /> : null}
       </View>
       <View style={styles.card}>
-        <Button title="Pick Image" onPress={openPicker} color="#3498db" />
+        {/* Use the CustomButton component for Pick Image */}
+        <CustomButton title="Pick Image" onPress={openPicker} color="#3498db" />
         {pickimageUri ? <Image source={{ uri: pickimageUri }} style={styles.image} /> : null}
       </View>
       {selectedImageUri ? (
         <View style={styles.card}>
-          <Button title="Enter Cordinates" onPress={navigateToCordinateScreen} color="#27ae60" />
+          {/* Use the CustomButton component for Enter Coordinates */}
+          <CustomButton title="Enter Coordinates" onPress={navigateToCordinateScreen} color="#27ae60" />
         </View>
       ) : null}
       {uploadSuccessMessage ? (
-        <Text style={styles.uploadMessage}>
-          {uploadSuccessMessage}
-        </Text>
+        <Text style={styles.uploadMessage}>{uploadSuccessMessage}</Text>
       ) : null}
     </View>
   );
-  
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f2f2f2',
-  },
-  card: {
-    backgroundColor: '#ffffff',
-    borderRadius: 8,
-    padding: 20,
-    marginBottom: 20,
-    width: '80%',
-  },
-  image: {
-    width: 200,
-    height: 200,
-    alignSelf: 'center',
-    marginBottom: 20,
-  },
-  uploadMessage: {
-    padding: 10,
-    color: 'green',
-  },
-});
 
 export default HomeScreen;
